@@ -9,7 +9,6 @@ export const ROUTES = {
   PROFILE: "/profile",
   WATCHLIST: "/my-list",
   LOGIN: "/login",
-  GOOGLE_CALLBACK: "/auth/google/callback",
   DETAIL: (type, id) => `/detail/${type}/${id}`,
   PLAYER: (type, id) => `/player/${type}/${id}`,
 };

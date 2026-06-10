@@ -14,7 +14,7 @@ const LoginToWatch = ({ className = '' }) => {
       <div>
         <p className="text-white font-semibold mb-1">Sign in to watch</p>
         <p className="text-gray-400 text-sm">
-          Please sign in with Google to watch the video
+          Please sign in to watch the video
         </p>
       </div>
       <button
@@ -22,7 +22,7 @@ const LoginToWatch = ({ className = '' }) => {
         onClick={() => navigate('/login')}
         className="px-6 py-2.5 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-700 transition-colors"
       >
-        Sign in with Google
+        Sign in to Watch
       </button>
     </div>
   );

@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Star, Calendar, Film } from "lucide-react";
 import { getMovieVideos, getTVVideos, getImageUrl } from "../../api/tmdb";
-import useRequireLogin from "../../hooks/useRequireLogin";
-import LoginToWatch from "../auth/LoginToWatch";
 
 const MediaModal = ({ item, type, isOpen, onClose }) => {
-  const { isGoogleLoggedIn } = useRequireLogin();
   const [trailerKey, setTrailerKey] = useState(null);
   const [loadingTrailer, setLoadingTrailer] = useState(false);
 
@@ -116,8 +113,6 @@ const MediaModal = ({ item, type, isOpen, onClose }) => {
                 <div className="aspect-video bg-gray-800 rounded-xl flex items-center justify-center">
                   <div className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
                 </div>
-              ) : !isGoogleLoggedIn ? (
-                <LoginToWatch />
               ) : trailerKey ? (
                 <div className="aspect-video rounded-xl overflow-hidden">
                   <iframe

@@ -4,41 +4,37 @@ import { persist } from "zustand/middleware";
 const useAuthStore = create(
   persist(
     (set) => ({
-      googleUser: null,
-      isGoogleLoggedIn: false,
-      accessToken: null,
+      user: null,
+      isLoggedIn: false,
 
-      loginWithGoogle: (profile, accessToken = null) =>
+      login: (profile) =>
         set({
-          googleUser: profile,
-          isGoogleLoggedIn: true,
-          accessToken,
+          user: profile,
+          isLoggedIn: true,
         }),
 
-      signOutGoogle: () =>
+      logout: () =>
         set({
-          googleUser: null,
-          isGoogleLoggedIn: false,
-          accessToken: null,
+          user: null,
+          isLoggedIn: false,
         }),
     }),
     {
       name: "ott-auth",
-      version: 4,
+      version: 5,
       partialize: (state) => ({
-        googleUser: state.googleUser,
-        isGoogleLoggedIn: state.isGoogleLoggedIn,
+        user: state.user,
+        isLoggedIn: state.isLoggedIn,
       }),
       migrate: (persisted) => {
         if (!persisted) return persisted;
-
         return {
-          googleUser: persisted.googleUser ?? persisted.user ?? null,
-          isGoogleLoggedIn:
+          user: persisted.user ?? persisted.googleUser ?? null,
+          isLoggedIn:
+            persisted.isLoggedIn ??
             persisted.isGoogleLoggedIn ??
-            persisted.isAuthenticated ??
-            !!persisted.googleUser,
-          accessToken: null,
+            !!persisted.user ??
+            false,
         };
       },
     }

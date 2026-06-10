@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Play, Plus, Check, Star, Clock, Calendar } from 'lucide-react';
 import {
@@ -14,12 +14,10 @@ import {
 } from '../api/tmdb';
 import useWatchlistStore from '../store/useWatchlistStore';
 import useRequireLogin from '../hooks/useRequireLogin';
-import LoginToWatch from '../components/auth/LoginToWatch';
 import ContentRow from '../components/home/ContentRow';
 
 const DetailPage = () => {
   const { type, id } = useParams();
-  const navigate = useNavigate();
   const [details, setDetails] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [cast, setCast] = useState([]);
@@ -27,7 +25,7 @@ const DetailPage = () => {
   const [loading, setLoading] = useState(true);
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } =
     useWatchlistStore();
-  const { isGoogleLoggedIn, goToPlayer } = useRequireLogin();
+  const { goToPlayer } = useRequireLogin();
 
   const inWatchlist = details ? isInWatchlist(details.id) : false;
 
@@ -193,19 +191,15 @@ const DetailPage = () => {
         {trailer && (
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-4">🎬 Trailer</h2>
-            {isGoogleLoggedIn ? (
-              <div className="aspect-video max-w-4xl rounded-xl overflow-hidden">
-                <iframe
-                  src={`https://www.youtube.com/embed/${trailer.key}?autoplay=0&rel=0`}
-                  title="Trailer"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              </div>
-            ) : (
-              <LoginToWatch className="max-w-4xl" />
-            )}
+            <div className="aspect-video max-w-4xl rounded-xl overflow-hidden">
+              <iframe
+                src={`https://www.youtube.com/embed/${trailer.key}?autoplay=0&rel=0`}
+                title="Trailer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
           </div>
         )}
 

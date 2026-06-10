@@ -4,10 +4,10 @@ import useAuthStore from "../store/useAuthStore";
 const useRequireLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isGoogleLoggedIn = useAuthStore((s) => s.isGoogleLoggedIn);
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
 
   const requireLogin = (targetPath) => {
-    if (isGoogleLoggedIn) return true;
+    if (isLoggedIn) return true;
     navigate("/login", { state: { from: targetPath } });
     return false;
   };
@@ -20,10 +20,10 @@ const useRequireLogin = () => {
       hash: location.hash,
     };
 
-    if (requireLogin(path)) navigate(path, { state: { from } });
+    navigate(path, { state: { from } });
   };
 
-  return { isGoogleLoggedIn, requireLogin, goToPlayer };
+  return { isLoggedIn, requireLogin, goToPlayer };
 };
 
 export default useRequireLogin;

@@ -7,7 +7,7 @@ import useAuthStore from "../store/useAuthStore";
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { watchlist, continueWatching } = useWatchlistStore();
-  const { googleUser, signOutGoogle } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const stats = [
     { label: "Watchlist", value: watchlist.length, icon: Bookmark, color: "text-blue-400" },
@@ -21,7 +21,7 @@ const ProfilePage = () => {
   ];
 
   const handleSignOut = () => {
-    signOutGoogle();
+    logout();
     navigate("/login", { replace: true });
   };
 
@@ -34,10 +34,10 @@ const ProfilePage = () => {
           className="flex flex-col items-center mb-10"
         >
           <div className="w-24 h-24 rounded-full bg-gradient-to-br from-red-500 to-red-800 flex items-center justify-center mb-4 shadow-lg overflow-hidden">
-            {googleUser?.picture ? (
+            {user?.picture ? (
               <img
-                src={googleUser.picture}
-                alt={googleUser.name}
+                src={user.picture}
+                alt={user.name}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
@@ -46,11 +46,8 @@ const ProfilePage = () => {
             )}
           </div>
 
-          <h1 className="text-2xl font-black">{googleUser?.name}</h1>
-          <p className="text-gray-400 text-sm mt-1">{googleUser?.email}</p>
-          <div className="mt-2 px-3 py-1 bg-blue-600/20 border border-blue-600/50 rounded-full">
-            <span className="text-blue-400 text-xs font-semibold">GOOGLE ACCOUNT</span>
-          </div>
+          <h1 className="text-2xl font-black">{user?.name}</h1>
+          <p className="text-gray-400 text-sm mt-1">{user?.email}</p>
         </motion.div>
 
         <div className="grid grid-cols-2 gap-4 mb-8">

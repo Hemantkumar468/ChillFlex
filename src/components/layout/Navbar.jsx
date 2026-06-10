@@ -9,7 +9,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { googleUser, isGoogleLoggedIn } = useAuthStore();
+  const { user, isLoggedIn } = useAuthStore();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -75,13 +75,13 @@ const Navbar = () => {
 
         <motion.button
           whileHover={{ scale: 1.1 }}
-          onClick={() => navigate(isGoogleLoggedIn ? "/profile" : "/login")}
+          onClick={() => navigate(isLoggedIn ? "/profile" : "/login")}
           className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center overflow-hidden"
         >
-          {isGoogleLoggedIn && googleUser?.picture ? (
+          {isLoggedIn && user?.picture ? (
             <img
-              src={googleUser.picture}
-              alt={googleUser.name}
+              src={user.picture}
+              alt={user.name}
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -90,7 +90,7 @@ const Navbar = () => {
           )}
         </motion.button>
 
-        {!isGoogleLoggedIn && (
+        {!isLoggedIn && (
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -117,7 +117,7 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md p-6 flex flex-col gap-4 md:hidden"
           >
-            {["Home", "Movies", "TV Shows", "My List", "Search", isGoogleLoggedIn ? "Profile" : "Sign In"].map(
+            {["Home", "Movies", "TV Shows", "My List", "Search", isLoggedIn ? "Profile" : "Sign In"].map(
               (item) => (
                 <Link
                   key={item}
